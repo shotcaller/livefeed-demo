@@ -1,5 +1,19 @@
-body {
+* {
   margin: 0;
-  display: flex;
-  
+  padding: 0;  
+}
+
+:root {
+  --background: #000000;
+  --surface: #121212;
+  --primary: #FFFFFF;
+  --secondary: #0F0F0F;
+  --onBackground: #F1F1F1;
+  --onSurface: #F2F2F2;
+  --onPrimary: #F9F9F9;
+  --onSecondary: #1F1F1F;
+}
+
+html {
+  background: var(--surface);
 }
