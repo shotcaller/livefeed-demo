@@ -1,16 +1,14 @@
-import { useState } from 'react'
-import './App.css'
-import LKRoom from './components/LKRoom/LKRoom';
-import MyAppBar from './components/MyAppBar/MyAppBar';
+import "./App.css";
+import MyAppBar from "./components/MyAppBar/MyAppBar";
+import { Outlet } from "react-router-dom";
 
 function App() {
-
   return (
     <>
-    <MyAppBar />
-    {/* <LKRoom /> */}
+      <MyAppBar />
+      <Outlet />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
