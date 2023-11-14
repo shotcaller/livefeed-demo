@@ -1,12 +1,13 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import { Typography } from '@mui/material';
+import React, { useState } from 'react'
 
 function Wall() {
+  
   return (
-    <Typography variant='h3' color="primary">
-        This is the Wall!
-    </Typography>
-  )
+    <>
+      <Typography variant='h1' component='h1'>Wall</Typography>
+    </>
+  );
 }
 
 export default Wall

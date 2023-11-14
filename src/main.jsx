@@ -7,6 +7,7 @@ import RouteErrorPage from './components/RouteErrorPage/RouteErrorPage'
 import Wall from './app/wall/wall'
 import Home
  from './app/home/Home'
+import Friends from './app/friends/Friends'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "wall",
         element: <Wall />
+      },
+      {
+        path: "friends",
+        element: <Friends />
       }
     ]
   }
