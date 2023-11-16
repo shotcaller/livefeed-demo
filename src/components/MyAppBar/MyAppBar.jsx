@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../slice/userSlice';
 import { useNavigate } from 'react-router-dom';
 
-function MyAppBar() {
+function MyAppBar(props) {
     const dispatch = useDispatch();
     const { name, online } = useSelector(state => state.user)
+    const { showLogout } = props;
     const navigate = useNavigate()
 
     const logoutUser = () => {
@@ -24,7 +25,7 @@ function MyAppBar() {
                     Welcome {name}!
                 </Typography>}
 
-                {online && <Button variant='contained' color='error' onClick={logoutUser}>
+                {showLogout && <Button variant='contained' color='error' onClick={logoutUser}>
                     Logout</Button>}
             </Toolbar>
         </AppBar>
