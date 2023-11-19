@@ -4,11 +4,10 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Root from './Root'
 import RouteErrorPage from './components/RouteErrorPage/RouteErrorPage'
-import Wall from './app/wall/wall'
-import Home
- from './app/home/Home'
+import Wall from './app/wall/Wall'
+import Home from './app/home/Home'
 import Friends from './app/friends/Friends'
-import Room from './app/room/room'
+import Room from './app/room/Room'
 const router = createBrowserRouter([
   {
     path: "/",
