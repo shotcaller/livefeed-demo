@@ -6,10 +6,10 @@ import {
   VideoConference,
 } from "@livekit/components-react";
 import MyVideoConference from "../MyVideoConference/MyVideoConference";
+import * as Constants from '../../constants/constants';
 
 function LKRoom(props) {
-  const serverUrl = "wss://first-app-2i3sztgn.livekit.cloud";
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTg3NzYwNTksImlzcyI6IkFQSVpjZ3JzdXVpbnNLdSIsIm5iZiI6MTY5ODY4OTY1OSwic3ViIjoicXVpY2tzdGFydCB1c2VyIHFmdXZqciIsInZpZGVvIjp7ImNhblB1Ymxpc2giOnRydWUsImNhblB1Ymxpc2hEYXRhIjp0cnVlLCJjYW5TdWJzY3JpYmUiOnRydWUsInJvb20iOiJxdWlja3N0YXJ0IHJvb20iLCJyb29tSm9pbiI6dHJ1ZX19.5Eizq28-JFgsq76KAgVCxOtQ2Lk9D5kbfkurSILlQzg";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAzNzg1MDIsImlzcyI6IkFQSVpjZ3JzdXVpbnNLdSIsIm5iZiI6MTcwMDM3NzYwMiwic3ViIjoic2hvdGNhbGxlciIsInZpZGVvIjp7ImNhblB1Ymxpc2giOnRydWUsImNhblB1Ymxpc2hEYXRhIjp0cnVlLCJjYW5TdWJzY3JpYmUiOnRydWUsInJvb20iOiJkZXYiLCJyb29tSm9pbiI6dHJ1ZX19.r_PCkgI_pOrlVXhJ5-iIKwO7NauDvGRqU8wZg4CjN3w";
 
   return (
     <LiveKitRoom
@@ -17,7 +17,7 @@ function LKRoom(props) {
       video={true}
       token={token}
       connectOptions={{ autoSubscribe: false }}
-      serverUrl={serverUrl}
+      serverUrl={Constants.LiveKitRoomURL}
       data-lk-theme="default"
       style={{ height: "100vh" }}
     >
