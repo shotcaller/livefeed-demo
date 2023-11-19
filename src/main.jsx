@@ -38,7 +38,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {console.log(import.meta.env.VITE_BASENAME)}
+    {console.log(import.meta.env.VITE_BASENAME, "ENV BASENAME")}
     <RouterProvider router={router} />
   </React.StrictMode>
 )
