@@ -7,7 +7,7 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react()],
-    base: process.env.VITE_BASENAME,
+    base: '/livefeed-demo/',
     envDir: './env'
   })
 }
