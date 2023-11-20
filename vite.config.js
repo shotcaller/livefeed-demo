@@ -7,7 +7,7 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react()],
-    base: "https://shotcaller.github.io/livefeed-demo/",
+    base: process.env.VITE_BASENAME,
     envDir: './env'
   })
 }
