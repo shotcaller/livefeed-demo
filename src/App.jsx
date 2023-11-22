@@ -1,15 +1,17 @@
-import { Box } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import "./App.css";
 import MyAppBar from "./components/MyAppBar/MyAppBar";
 import { Outlet, useLocation } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { darkTheme } from './theme/darkTheme';
 
 function App() {
   const location = useLocation()
   const { online } = useSelector((state) => state.user);
   const [showNavigation, setShowNavigation] = useState(false);
+  const [darkMode, setDarkMode] = useState(false)
   
   useEffect(() => {
     if(online && location.pathname!=="/room")
@@ -20,11 +22,13 @@ function App() {
 
   return (
     <>
+      <ThemeProvider theme={darkMode?darkTheme:{}}>
       <MyAppBar showLogout={showNavigation} />
       <Box sx={{ pb: showNavigation?7:0 }}>
         <Outlet />
         {showNavigation && <Navigation />}
       </Box>
+      </ThemeProvider>
     </>
   );
 }
