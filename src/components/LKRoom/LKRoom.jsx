@@ -5,7 +5,7 @@ import {
   RoomAudioRenderer,
   VideoConference,
 } from "@livekit/components-react";
-import MyVideoConference from "../MyVideoConference/MyVideoConference";
+import '@livekit/components-styles';
 import * as Constants from '../../constants/constants';
 
 function LKRoom({ token }) {
