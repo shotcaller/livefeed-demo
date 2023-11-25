@@ -8,6 +8,8 @@ import Wall from './app/wall/Wall'
 import Home from './app/home/Home'
 import Friends from './app/friends/Friends'
 import Room from './app/room/Room'
+import { loader as roomTokenLoader } from './app/room/Room'
+import RoomErrorElement from './app/room/RoomErrorElement'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +30,9 @@ const router = createBrowserRouter([
       },
       {
         path: "room",
-        element: <Room />
+        loader: roomTokenLoader,
+        element: <Room />,
+        errorElement: <RoomErrorElement />
       }
     ]
   }

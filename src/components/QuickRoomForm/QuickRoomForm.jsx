@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardActions, CardContent, FormControlLabel, Paper, Switch, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigateQueryParams } from "../../hooks/useNavigateQueryParams";
 
 export const QuickRoomForm = () => {
   const {
@@ -9,12 +9,14 @@ export const QuickRoomForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate();
+  
+  const navigateQueryParams = useNavigateQueryParams();
   const roomErrorMsg = "Room name is required";
+  const userErrorMsg = "User name is required";
 
   const onSubmit = (data) => {
     console.log(data);
-    navigate('/room');
+    navigateQueryParams('/room', {roomname: data.roomName, username: data.userName})
   };
   return (
     <>
@@ -33,6 +35,14 @@ export const QuickRoomForm = () => {
                 id="roomName"
                 {...register("roomName", { required: roomErrorMsg })}
                 helperText={errors.roomName ? errors.roomName.message : ""}
+              />
+              <TextField
+                error={errors.userName ? true : false}
+                variant="outlined"
+                label="User Name"
+                id="userName"
+                {...register("userName", { required: userErrorMsg })}
+                helperText={errors.userName ? errors.userName.message : ""}
               />
               <FormControlLabel control={<Switch />} {...register("useVideo")} label="Use Video?"/>
             </CardContent>
