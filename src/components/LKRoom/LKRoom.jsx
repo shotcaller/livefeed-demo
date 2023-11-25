@@ -15,7 +15,7 @@ function LKRoom({ token }) {
       audio={true}
       video={true}
       token={token}
-      connectOptions={{ autoSubscribe: false }}
+      connectOptions={{ autoSubscribe: true }}
       serverUrl={Constants.LiveKitRoomURL}
       data-lk-theme="default"
       style={{ height: "100vh" }}
