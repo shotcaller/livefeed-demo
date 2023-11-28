@@ -1,23 +1,16 @@
-import { Button, Typography } from '@mui/material'
+import { Button } from '@mui/material'
 import React from 'react'
-import { useLoaderData, useNavigate, useNavigation } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import LKRoom from '../../components/LKRoom/LKRoom'
 import axios from 'axios'
 
 const Room = () => {
-    const navigate = useNavigate();
-    //For loading state
-    const navigation = useNavigation();
-
     const { token } = useLoaderData();
   return (
     <>
     <Button variant='contained' onClick={() => navigate(-1)}>Back</Button>
-    {navigation.state==='loading' && <Typography color='white'>Loading...</Typography>}
 
-    {navigation.state==='idle' && token &&
-    <LKRoom token={token} />
-    }
+    {token && <LKRoom token={token} />}
     </>
   )
 }
@@ -37,6 +30,7 @@ export const loader = async ({ request }) => {
         }
       })
       const data = res.data;
+      await delay(5000)
       return { token: data };
     }
     else throw new Error("Invalid room name or user ID")
@@ -46,3 +40,8 @@ export const loader = async ({ request }) => {
     throw new Error("Error while generating token")
   }
 }
+
+
+const delay = (delayInms) => {
+  return new Promise(resolve => setTimeout(resolve, delayInms));
+};
