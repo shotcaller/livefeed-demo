@@ -1,14 +1,15 @@
 import { Button } from '@mui/material'
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import LKRoom from '../../components/LKRoom/LKRoom'
 import axios from 'axios'
 
 const Room = () => {
     const { token } = useLoaderData();
+    const navigate = useNavigate()
   return (
     <>
-    <Button variant='contained' onClick={() => navigate(-1)}>Back</Button>
+    <Button variant='contained' onClick={() => navigate('/friends')}>Exit</Button>
 
     {token && <LKRoom token={token} />}
     </>
@@ -23,7 +24,7 @@ export const loader = async ({ request }) => {
 
   try{
     if(roomName && userName){
-      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/getRoomToken`,{
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL_PROD}/getRoomToken`,{
         params: {
           roomName,
           userName

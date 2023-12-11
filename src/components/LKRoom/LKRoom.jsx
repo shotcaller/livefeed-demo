@@ -18,7 +18,7 @@ function LKRoom({ token }) {
       connectOptions={{ autoSubscribe: true }}
       serverUrl={Constants.LiveKitRoomURL}
       data-lk-theme="default"
-      style={{ height: "100vh" }}
+      style={{ height: "86vh" }}
     >
       {/* <MyVideoConference />
       <RoomAudioRenderer />
