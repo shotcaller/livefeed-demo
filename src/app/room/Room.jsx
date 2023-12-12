@@ -24,7 +24,7 @@ export const loader = async ({ request }) => {
 
   try{
     if(roomName && userName){
-      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL_PROD}/getRoomToken`,{
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/getRoomToken`,{
         params: {
           roomName,
           userName
