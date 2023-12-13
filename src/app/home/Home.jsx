@@ -28,6 +28,7 @@ function Home() {
       <Grid container spacing={1}>
         <Grid item xs={0} md={6} lg={8}></Grid>
         <Grid item xs={12} md={6} lg={4}>
+          <Container>
           <Box sx={{ backgroundColor: "background.paper" }}>
             <Tabs value={page} onChange={handlePageChange} centered textColor="primary">
               <Tab label="Log In" />
@@ -35,6 +36,7 @@ function Home() {
             </Tabs>
           </Box>
           {page === 0 ? <Login /> : <Register setPage={setPage} />}
+          </Container>
         </Grid>
       </Grid>
     </>
