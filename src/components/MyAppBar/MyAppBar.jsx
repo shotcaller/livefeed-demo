@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../slice/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { AppName } from '../../constants/constants';
 
 function MyAppBar(props) {
     const dispatch = useDispatch();
@@ -18,8 +19,11 @@ function MyAppBar(props) {
     <Box sx={{ flexGrow: 1 }}>
         <AppBar position='static'>
             <Toolbar>
-                <Typography variant='h6' component="div" sx={{ flexGrow: 1 }}>
-                    LiveFeed
+                <Typography variant='h5' component="div" sx={{ flexGrow: 1 }}>
+                    [ {AppName} ]
+                    <Typography variant='caption' component="div">
+                        a Ruturaj Ghodke production
+                    </Typography>
                 </Typography>
                 {online && <Typography variant='h6' component="div" sx={{ flexGrow: 1 }}>
                     Welcome {name}!

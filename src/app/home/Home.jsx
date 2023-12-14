@@ -22,10 +22,7 @@ function Home() {
   };
   return (
     <>
-      <Typography color="whitesmoke" variant="h3">
-        This is Home
-      </Typography>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} sx={{mt: 2}}>
         <Grid item xs={0} md={6} lg={8}></Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Container>

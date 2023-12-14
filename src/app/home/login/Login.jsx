@@ -1,4 +1,12 @@
-import { Button, Card, CardActions, CardContent, Paper, Box, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Paper,
+  Box,
+  TextField,
+} from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +19,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
 
   const usernameErrorMsg = "Username is required";
