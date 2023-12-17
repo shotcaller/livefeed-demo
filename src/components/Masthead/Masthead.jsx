@@ -1,18 +1,26 @@
-import { Box, Card, Typography } from '@mui/material'
+import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
 import React from 'react'
+import { AppName } from '../../constants/constants';
 
-const Masthead = () => {
+const Masthead = (props) => {
+  const {open, handleClose} = props;
   return (
     <>
-        <Box sx={{position: 'absolute', right: 0, bottom: '15%'}}>
-            <Card sx={{p: 1}}>
-                
-                    <Typography>
-                        a Ruturaj Ghodke production
-                    </Typography>
-                
-            </Card>
-        </Box>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>
+              Welcome to {AppName}!
+          </DialogTitle>
+          <DialogContent dividers>
+            <Typography>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates maiores recusandae qui officiis, doloribus, illo veritatis iusto magni, soluta accusamus sequi aperiam. Eos, fugit aliquid quo perferendis fuga inventore esse?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Typography gutterBottom variant='caption'>
+              a Ruturaj Ghodke production
+            </Typography>
+          </DialogActions>
+        </Dialog>
     </>
   )
 }
