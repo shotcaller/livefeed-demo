@@ -13,7 +13,7 @@ function LKRoom({ token }) {
   return (
     <LiveKitRoom
       audio={true}
-      video={true}
+      video={false}
       token={token}
       connectOptions={{ autoSubscribe: true }}
       serverUrl={Constants.LiveKitRoomURL}
