@@ -12,6 +12,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../slice/userSlice";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { serverGraphqlUrl } from "../../../constants/constants";
+import { OPERATION_NAMES, createDataPayload } from "../../../graphql/utils";
+import { LOGIN_QUERY } from "../../../graphql/query/user";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -25,9 +29,31 @@ const Login = () => {
   const usernameErrorMsg = "Username is required";
   const passwordErrorMsg = "Password is required";
 
-  const loginUser = () => {
-    dispatch(login({ name: "Ruturaj" }));
-    navigate("/wall");
+  const loginUser = async (formData) => {
+    try{
+      const response = await axios.post(serverGraphqlUrl, 
+        createDataPayload(
+          OPERATION_NAMES.login,
+          LOGIN_QUERY,
+          {
+            loginPayload:{
+              userid: formData.username,
+              password: formData.password
+            }
+          }
+        ))
+        
+      if(response.data.errors) throw Error("Error while logging in.");
+
+      const data = response.data.data.login;
+      if(data.success && data.token.split('.').length==3){
+        dispatch(login({ name: "Ruturaj" }));
+        navigate("/wall");
+      }
+      else throw Error("Error while logging in.")
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>

@@ -3,6 +3,7 @@ import React from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import LKRoom from '../../components/LKRoom/LKRoom'
 import axios from 'axios'
+import { serverRoomTokenUrl } from '../../constants/constants'
 
 const Room = () => {
     const { token } = useLoaderData();
@@ -24,7 +25,7 @@ export const loader = async ({ request }) => {
 
   try{
     if(roomName && userName){
-      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/getRoomToken`,{
+      const res = await axios.get(serverRoomTokenUrl,{
         params: {
           roomName,
           userName
