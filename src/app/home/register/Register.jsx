@@ -7,8 +7,12 @@ import {
   Paper,
   TextField
 } from "@mui/material";
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { serverGraphqlUrl } from "../../../constants/constants";
+import { OPERATION_NAMES, createDataPayload } from "../../../graphql/utils";
+import { REGISTER_QUERY } from "../../../graphql/query/user";
 
 const Register = (props) => {
   const {
@@ -22,8 +26,29 @@ const Register = (props) => {
   const passwordErrorMsg = "Password is required";
 
 
-  const registerUser = () => {
-    props.setPage(0);
+  const registerUser = async (formData) => {
+    try {
+      const response = await axios.post(serverGraphqlUrl,
+        createDataPayload(
+          OPERATION_NAMES.register,
+          REGISTER_QUERY,
+          {
+            registerPayload: {
+              userid: formData.userid,
+              name: formData.name,
+              password: formData.password
+            }
+          }))
+
+      if(response.data.errors) throw Error("Error while registration.");
+
+      const data = response.data.data.register;
+      if(data.success && data.user.userid){
+        props.setPage(0);
+      } else throw Error("Error while registration.")
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <>

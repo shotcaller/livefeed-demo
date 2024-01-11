@@ -47,7 +47,8 @@ const Login = () => {
 
       const data = response.data.data.login;
       if(data.success && data.token.split('.').length==3){
-        dispatch(login({ name: "Ruturaj" }));
+        const {id, name, userid } = data.user;
+        dispatch(login({ id, name, userid }));
         navigate("/wall");
       }
       else throw Error("Error while logging in.")

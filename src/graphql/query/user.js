@@ -11,3 +11,15 @@ export const LOGIN_QUERY = `
     }
   }
 `
+
+export const REGISTER_QUERY = `
+  mutation Register($registerPayload: RegisterPayload!) {
+    register(registerPayload: $registerPayload) {
+      success,
+      user {
+        userid,
+        name
+      }
+    }
+  }
+`
