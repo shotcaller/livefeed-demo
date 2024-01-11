@@ -21,14 +21,14 @@ export default Room
 
 export const loader = async ({ request }) => {
   const roomName = new URL(request.url).searchParams.get('roomname');
-  const userName = new URL(request.url).searchParams.get('username');
+  const userid = new URL(request.url).searchParams.get('userid');
 
   try{
-    if(roomName && userName){
+    if(roomName && userid){
       const res = await axios.get(serverRoomTokenUrl,{
         params: {
           roomName,
-          userName
+          userName: userid
         }
       })
       const data = res.data;

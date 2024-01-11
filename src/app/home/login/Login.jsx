@@ -26,7 +26,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const usernameErrorMsg = "Username is required";
+  const useridErrorMsg = "User ID is required";
   const passwordErrorMsg = "Password is required";
 
   const loginUser = async (formData) => {
@@ -37,7 +37,7 @@ const Login = () => {
           LOGIN_QUERY,
           {
             loginPayload:{
-              userid: formData.username,
+              userid: formData.userid,
               password: formData.password
             }
           }
@@ -65,12 +65,12 @@ const Login = () => {
                 <TextField
                   fullWidth
                   margin="normal"
-                  error={errors.username ? true : false}
+                  error={errors.userid ? true : false}
                   variant="outlined"
-                  label="Username"
-                  id="username"
-                  {...register("username", { required: usernameErrorMsg })}
-                  helperText={errors.username ? errors.username.message : ""}
+                  label="User ID"
+                  id="userid"
+                  {...register("userid", { required: useridErrorMsg })}
+                  helperText={errors.userid ? errors.userid.message : ""}
                 />
                 <TextField
                   fullWidth

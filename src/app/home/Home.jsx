@@ -15,7 +15,7 @@ import Register from "./register/Register";
 
 function Home() {
   const [page, setPage] = useState(0);
-  const { online } = useSelector((state) => state.user);
+  //const { online } = useSelector((state) => state.user);
 
   const handlePageChange = (e, newValue) => {
     setPage(newValue);

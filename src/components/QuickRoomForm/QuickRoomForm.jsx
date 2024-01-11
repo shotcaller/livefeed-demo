@@ -32,7 +32,7 @@ export const QuickRoomForm = () => {
     console.log(data);
     navigateQueryParams("/room", {
       roomname: data.roomName,
-      username: data.userName,
+      userid: data.userid,
     });
   };
   return (
@@ -55,12 +55,12 @@ export const QuickRoomForm = () => {
                     helperText={errors.roomName ? errors.roomName.message : ""}
                   />
                   <TextField
-                    error={errors.userName ? true : false}
+                    error={errors.userid ? true : false}
                     variant="outlined"
-                    label="User Name"
-                    id="userName"
-                    {...register("userName", { required: userErrorMsg })}
-                    helperText={errors.userName ? errors.userName.message : ""}
+                    label="User ID"
+                    id="userid"
+                    {...register("userid", { required: userErrorMsg })}
+                    helperText={errors.userid ? errors.userid.message : ""}
                   />
                   <FormControlLabel
                     control={<Switch />}
