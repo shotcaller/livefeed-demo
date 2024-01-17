@@ -48,7 +48,7 @@ const Login = () => {
       const data = response.data.data.login;
       if(data.success && data.token.split('.').length==3){
         localStorage.setItem(tokenStorageTitle,data.token);
-        axios.defaults.headers.common["Authorization"] = "Bearer "+ token;
+        axios.defaults.headers.common["Authorization"] = "Bearer "+ data.token;
         dispatch(login(data.user));
         navigate("/wall");
       }
