@@ -5,7 +5,7 @@ import { serverGraphqlUrl, tokenStorageTitle } from './constants/constants'
 import axios from 'axios'
 import { OPERATION_NAMES, createDataPayload } from './graphql/utils'
 import { LOGGED_IN_USER_QUERY } from './graphql/query/user'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 import { login } from './slice/userSlice'
 import { useLogout } from './hooks/useLogout'
 
@@ -13,10 +13,13 @@ function Root() {
   const { loggedInUser } = useLoaderData();
   const dispatch = useDispatch();
   const logout = useLogout();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(loggedInUser){
       dispatch(login(loggedInUser));
+      if(location.pathname === '/') navigate("/wall");
     } else {
       logout();
     }
