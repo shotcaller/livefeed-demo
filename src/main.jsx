@@ -9,11 +9,15 @@ import Home from './app/home/Home'
 import Friends from './app/friends/Friends'
 import Room from './app/room/Room'
 import { loader as roomTokenLoader } from './app/room/Room'
+import { loader as rootAuthLoader } from './Root';
 import RoomErrorElement from './app/room/RoomErrorElement'
+import { Provider } from 'react-redux'
+import store from './store/store'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Provider store={store}><Root /></Provider>,
+    loader: rootAuthLoader,
     errorElement: <RouteErrorPage />,
     children: [
       {

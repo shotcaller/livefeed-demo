@@ -1,22 +1,19 @@
 import { AppBar, Box, Button, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../slice/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { AppName } from "../../constants/constants";
 import { Info } from "@mui/icons-material";
 import Masthead from "../Masthead/Masthead";
+import { useLogout } from "../../hooks/useLogout";
 
 function MyAppBar(props) {
-  const dispatch = useDispatch();
+  const logout = useLogout();
   const { name, online } = useSelector((state) => state.user);
   const { showLogout } = props;
-  const navigate = useNavigate();
   const [openMasthead, setOpenMasthead] = useState(false);
 
   const logoutUser = () => {
-    dispatch(logout());
-    navigate("/");
+    logout();
   };
   return (
     <Box sx={{ flexGrow: 1 }}>

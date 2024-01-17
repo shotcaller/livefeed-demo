@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../../slice/userSlice";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { serverGraphqlUrl } from "../../../constants/constants";
+import { serverGraphqlUrl, tokenStorageTitle } from "../../../constants/constants";
 import { OPERATION_NAMES, createDataPayload } from "../../../graphql/utils";
 import { LOGIN_QUERY } from "../../../graphql/query/user";
 
@@ -47,8 +47,9 @@ const Login = () => {
 
       const data = response.data.data.login;
       if(data.success && data.token.split('.').length==3){
-        const {id, name, userid } = data.user;
-        dispatch(login({ id, name, userid }));
+        localStorage.setItem(tokenStorageTitle,data.token);
+        axios.defaults.headers.common["Authorization"] = "Bearer "+ token;
+        dispatch(login(data.user));
         navigate("/wall");
       }
       else throw Error("Error while logging in.")

@@ -23,3 +23,12 @@ export const REGISTER_QUERY = `
     }
   }
 `
+export const LOGGED_IN_USER_QUERY = `
+  query LoggedInUser {
+    loggedInUser {
+      userid,
+      name,
+      id
+    }
+  }
+`
