@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation/Navigation";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { darkTheme } from './theme/darkTheme';
+import AlertPopup from "./components/AlertPopup/AlertPopup";
 
 function App() {
   const location = useLocation()
@@ -28,6 +29,7 @@ function App() {
         <Outlet />
         {showNavigation && <Navigation />}
       </Box>
+      <AlertPopup />
       </ThemeProvider>
     </>
   );

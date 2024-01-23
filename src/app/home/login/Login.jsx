@@ -9,17 +9,20 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { login } from "../../../slice/userSlice";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { serverGraphqlUrl, tokenStorageTitle } from "../../../constants/constants";
+import { loginFailure, loginSuccess, serverGraphqlUrl, tokenStorageTitle } from "../../../constants/constants";
 import { OPERATION_NAMES, createDataPayload } from "../../../graphql/utils";
 import { LOGIN_QUERY } from "../../../graphql/query/user";
+import Loader from "../../../components/Loader/Loader";
+import { openAlert } from "../../../slice/alertPopupSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const {
     register,
     handleSubmit,
@@ -30,6 +33,7 @@ const Login = () => {
   const passwordErrorMsg = "Password is required";
 
   const loginUser = async (formData) => {
+    navigation.state = 'loading';
     try{
       const response = await axios.post(serverGraphqlUrl, 
         createDataPayload(
@@ -43,17 +47,21 @@ const Login = () => {
           }
         ))
         
-      if(response.data.errors) throw Error("Error while logging in.");
+      if(response.data.errors) throw Error(response.data.errors[0].message??"Error while logging in.");
 
       const data = response.data.data.login;
       if(data.success && data.token.split('.').length==3){
         localStorage.setItem(tokenStorageTitle,data.token);
         axios.defaults.headers.common["Authorization"] = "Bearer "+ data.token;
         dispatch(login(data.user));
+        dispatch(openAlert({ message: loginSuccess, type: 'success' }));
+        navigation.state = 'idle';
         navigate("/wall");
       }
       else throw Error("Error while logging in.")
     } catch (error) {
+      navigation.state = 'idle';
+      dispatch(openAlert({ message: `${loginFailure} ${error.message}`, type: 'error' }));
       console.log(error);
     }
   };
@@ -86,7 +94,7 @@ const Login = () => {
                 />
               </CardContent>
               <CardActions>
-                <Button variant="contained" color="primary" type="submit">
+                <Button disabled={navigation.state==='loading'} variant="contained" color="primary" type="submit">
                   Log In
                 </Button>
               </CardActions>
@@ -94,6 +102,7 @@ const Login = () => {
           </form>
         </Card>
       </Box>
+      <Loader open={navigation.state==='loading'} />
     </>
   );
 };

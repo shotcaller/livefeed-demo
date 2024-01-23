@@ -10,9 +10,13 @@ import {
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { serverGraphqlUrl } from "../../../constants/constants";
+import { registerationFailure, registrationSuccess, serverGraphqlUrl } from "../../../constants/constants";
 import { OPERATION_NAMES, createDataPayload } from "../../../graphql/utils";
 import { REGISTER_QUERY } from "../../../graphql/query/user";
+import { useNavigation } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
+import { useDispatch } from "react-redux";
+import { openAlert } from '../../../slice/alertPopupSlice';
 
 const Register = (props) => {
   const {
@@ -25,8 +29,11 @@ const Register = (props) => {
   const useridErrorMsg = "User ID is required";
   const passwordErrorMsg = "Password is required";
 
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const registerUser = async (formData) => {
+    navigation.state = 'loading';
     try {
       const response = await axios.post(serverGraphqlUrl,
         createDataPayload(
@@ -40,13 +47,23 @@ const Register = (props) => {
             }
           }))
 
-      if(response.data.errors) throw Error("Error while registration.");
+      if(response.data.errors) throw Error(response.data.errors[0].message??"Error while registration.");
 
       const data = response.data.data.register;
       if(data.success && data.user.userid){
+        navigation.state = 'idle';
+        dispatch(openAlert({
+          message: registrationSuccess,
+          type: 'success'
+        }))
         props.setPage(0);
       } else throw Error("Error while registration.")
     } catch (e) {
+      navigation.state = 'idle';
+      dispatch(openAlert({
+        message: `${registerationFailure} ${e.message}`,
+        type: 'error'
+      }))
       console.log(e);
     }
   };
@@ -92,7 +109,7 @@ const Register = (props) => {
 
               </CardContent>
               <CardActions>
-                <Button variant="contained" color="secondary" type="submit">
+                <Button disabled={navigation.state==='loading'} variant="contained" color="secondary" type="submit">
                   Register
                 </Button>
               </CardActions>
@@ -100,6 +117,8 @@ const Register = (props) => {
           </form>
         </Card>
       </Box>
+      
+      <Loader open={navigation.state==='loading'} />
     </>
   );
 };
