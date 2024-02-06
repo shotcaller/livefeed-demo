@@ -13,8 +13,8 @@ import { useNavigate, useNavigation } from "react-router-dom";
 import { login } from "../../../slice/userSlice";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { loginFailure, loginSuccess, serverGraphqlUrl, tokenStorageTitle } from "../../../constants/constants";
-import { OPERATION_NAMES, createDataPayload } from "../../../graphql/utils";
+import { loginFailure, loginSuccess, tokenStorageTitle } from "../../../constants/constants";
+import { OPERATION_NAMES, callGraphqlServer } from "../../../graphql/utils";
 import { LOGIN_QUERY } from "../../../graphql/query/user";
 import Loader from "../../../components/Loader/Loader";
 import { openAlert } from "../../../slice/alertPopupSlice";
@@ -35,8 +35,7 @@ const Login = () => {
   const loginUser = async (formData) => {
     navigation.state = 'loading';
     try{
-      const response = await axios.post(serverGraphqlUrl, 
-        createDataPayload(
+      const response = await callGraphqlServer(
           OPERATION_NAMES.login,
           LOGIN_QUERY,
           {
@@ -45,11 +44,9 @@ const Login = () => {
               password: formData.password
             }
           }
-        ))
+        )
         
-      if(response.data.errors) throw Error(response.data.errors[0].message??"Error while logging in.");
-
-      const data = response.data.data.login;
+      const data = response.login;
       if(data.success && data.token.split('.').length==3){
         localStorage.setItem(tokenStorageTitle,data.token);
         axios.defaults.headers.common["Authorization"] = "Bearer "+ data.token;
@@ -62,7 +59,7 @@ const Login = () => {
     } catch (error) {
       navigation.state = 'idle';
       dispatch(openAlert({ message: `${loginFailure} ${error.message}`, type: 'error' }));
-      console.log(error);
+      console.error(error);
     }
   };
   return (

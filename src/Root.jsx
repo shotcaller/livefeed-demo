@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import App from './App'
-import { serverGraphqlUrl, tokenStorageTitle } from './constants/constants'
+import { tokenStorageTitle } from './constants/constants'
 import axios from 'axios'
-import { OPERATION_NAMES, createDataPayload } from './graphql/utils'
+import { OPERATION_NAMES, callGraphqlServer } from './graphql/utils'
 import { LOGGED_IN_USER_QUERY } from './graphql/query/user'
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 import { login } from './slice/userSlice'
@@ -41,21 +41,18 @@ export const loader = async () => {
   else {
     try{
       axios.defaults.headers.common["Authorization"] = "Bearer "+ token;
-      const response = await axios.post(serverGraphqlUrl, 
-        createDataPayload(
+      const response = await callGraphqlServer(
           OPERATION_NAMES.loggedInUser,
-          LOGGED_IN_USER_QUERY))
+          LOGGED_IN_USER_QUERY)
   
-      if(response.data.errors) throw Error("Error while logging in.");
-
-      const data = response.data.data.loggedInUser;
+      const data = response.loggedInUser;
       if(data){
         return { loggedInUser: data }
       }
       else throw Error("No response from server.");
   
     } catch (e) {
-      console.log(e);
+      console.error(e);
       delete axios.defaults.headers.common["Authorization"];
       return { loggedInUser: null };
     }

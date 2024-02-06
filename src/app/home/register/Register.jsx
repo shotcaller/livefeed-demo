@@ -7,11 +7,10 @@ import {
   Paper,
   TextField
 } from "@mui/material";
-import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { registerationFailure, registrationSuccess, serverGraphqlUrl } from "../../../constants/constants";
-import { OPERATION_NAMES, createDataPayload } from "../../../graphql/utils";
+import { registerationFailure, registrationSuccess } from "../../../constants/constants";
+import { OPERATION_NAMES, callGraphqlServer } from "../../../graphql/utils";
 import { REGISTER_QUERY } from "../../../graphql/query/user";
 import { useNavigation } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
@@ -35,8 +34,7 @@ const Register = (props) => {
   const registerUser = async (formData) => {
     navigation.state = 'loading';
     try {
-      const response = await axios.post(serverGraphqlUrl,
-        createDataPayload(
+      const response = await callGraphqlServer(
           OPERATION_NAMES.register,
           REGISTER_QUERY,
           {
@@ -45,11 +43,9 @@ const Register = (props) => {
               name: formData.name,
               password: formData.password
             }
-          }))
+          })
 
-      if(response.data.errors) throw Error(response.data.errors[0].message??"Error while registration.");
-
-      const data = response.data.data.register;
+      const data = response.register;
       if(data.success && data.user.userid){
         navigation.state = 'idle';
         dispatch(openAlert({
@@ -64,7 +60,7 @@ const Register = (props) => {
         message: `${registerationFailure} ${e.message}`,
         type: 'error'
       }))
-      console.log(e);
+      console.error(e);
     }
   };
   return (
