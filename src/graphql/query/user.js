@@ -32,3 +32,17 @@ export const LOGGED_IN_USER_QUERY = `
     }
   }
 `
+
+export const LOGGED_IN_USER_FRIENDS_QUERY = `
+  query LoggedInUserFriends {
+    loggedInUser {
+      userid,
+      name,
+      id,
+      friends {
+        userid,
+        name
+      }
+    }
+  }
+`

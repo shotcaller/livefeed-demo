@@ -4,7 +4,9 @@ import { serverGraphqlUrl } from "../constants/constants";
 export const OPERATION_NAMES = {
   login: "Login",
   register: "Register",
-  loggedInUser: "LoggedInUser"
+  loggedInUser: "LoggedInUser",
+  loggedInUserFriends: "LoggedInUserFriends"
+
 };
 
 export const createDataPayload = (operationName, query, variables=null) => {
