@@ -41,7 +41,8 @@ export const LOGGED_IN_USER_FRIENDS_QUERY = `
       id,
       friends {
         userid,
-        name
+        name,
+        id
       }
     }
   }
