@@ -1,6 +1,5 @@
-import { Container, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
-import { QuickRoomForm } from "../../components/QuickRoomForm/QuickRoomForm";
 import { OPERATION_NAMES, callGraphqlServer } from '../../graphql/utils';
 import { LOGGED_IN_USER_FRIENDS_QUERY } from "../../graphql/query/user";
 import { useLoaderData } from "react-router-dom";
@@ -16,9 +15,6 @@ function Friends() {
   
   return (
     <>
-      <Container maxWidth="xl">
-        <QuickRoomForm />
-      </Container>
       <Grid container>
         <Grid item xs={0} md={2} lg={3}></Grid>
         <Grid item xs={12} md={8} lg={6}>
