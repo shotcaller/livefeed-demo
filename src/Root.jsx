@@ -53,8 +53,10 @@ export const loader = async () => {
   
     } catch (e) {
       console.error(e);
-      delete axios.defaults.headers.common["Authorization"];
-      return { loggedInUser: null };
+      if(e.message==='Unauthorized'){
+        delete axios.defaults.headers.common["Authorization"];
+        return { loggedInUser: null };
+      }
     }
   }
 }
