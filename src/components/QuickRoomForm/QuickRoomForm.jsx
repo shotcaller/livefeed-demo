@@ -15,8 +15,10 @@ import { useForm } from "react-hook-form";
 import { useNavigateQueryParams } from "../../hooks/useNavigateQueryParams";
 import { useNavigation } from "react-router-dom";
 import Loader from "../Loader/Loader";
+import { useSelector } from "react-redux";
 
 export const QuickRoomForm = () => {
+  const { userid } = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
@@ -26,13 +28,11 @@ export const QuickRoomForm = () => {
   const navigateQueryParams = useNavigateQueryParams();
   const navigation = useNavigation();
   const roomErrorMsg = "Room name is required";
-  const userErrorMsg = "User name is required";
 
   const onSubmit = (data) => {
-    console.log(data);
     navigateQueryParams("/room", {
       roomname: data.roomName,
-      userid: data.userid,
+      userid: userid,
     });
   };
   return (
@@ -53,14 +53,6 @@ export const QuickRoomForm = () => {
                     id="roomName"
                     {...register("roomName", { required: roomErrorMsg })}
                     helperText={errors.roomName ? errors.roomName.message : ""}
-                  />
-                  <TextField
-                    error={errors.userid ? true : false}
-                    variant="outlined"
-                    label="User ID"
-                    id="userid"
-                    {...register("userid", { required: userErrorMsg })}
-                    helperText={errors.userid ? errors.userid.message : ""}
                   />
                   <FormControlLabel
                     control={<Switch />}

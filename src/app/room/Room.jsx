@@ -39,7 +39,6 @@ export const loader = async ({ request }) => {
   }
   catch (error) {
     console.error(error);
-    throw new Error("Error while generating token")
   }
 }
 
