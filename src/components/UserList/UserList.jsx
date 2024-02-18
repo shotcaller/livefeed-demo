@@ -6,7 +6,7 @@ import React from 'react'
  * so that in friend list can define particular list item.
  */
 const UserList = (props) => {
-  const users = props.users;
+  const users = props.users??[];
   const width = props.width??'100%';
   const height = props.height??400;
   const bgColor = props.bgColor??'background.paper'
@@ -14,7 +14,7 @@ const UserList = (props) => {
   return (
     <Box sx={{bgcolor: bgColor, width: width, height: height}}>
       <List sx={{width: '100%', height: '100%', bgcolor: bgColor}}>
-        {users.map(user => <FriendListItem user={user} key={user.id} /> )}
+        {users?.map(user => <FriendListItem user={user} key={user.id} /> )}
       </List>
     </Box>
   )

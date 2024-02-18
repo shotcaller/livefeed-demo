@@ -29,15 +29,15 @@ export const callGraphqlServer = async (operationName, query, variables=null) =>
   try {
     const token = localStorage.getItem(tokenStorageTitle);
     if(!token && (operationName!==OPERATION_NAMES.login && operationName!==OPERATION_NAMES.register)) 
-      throw {request : {statusText: 'Unauthorized'}};
+      throw {response : {status: 401}};
 
     const response = await axios.post(serverGraphqlUrl, createDataPayload(operationName, query, variables));
-    if(response.data.errors || response.statusText!=='OK') throw response;
+    if(response.data.errors || (response.status<200 || response.status>299)) throw response;
     
     return response.data.data;
   } catch (e) {
     //If token expired or not present or unauth req, logs out from Root
-    if(e?.request?.statusText==='Unauthorized'){
+    if(e?.response?.status===401){
       throw new Error('Unauthorized');
     }
     else
