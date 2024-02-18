@@ -7,15 +7,22 @@ import React from 'react'
  */
 const UserList = (props) => {
   const users = props.users??[];
-  const width = props.width??'100%';
   const height = props.height??400;
   const bgColor = props.bgColor??'background.paper'
   const listType = props.listType??'friendList';
+  const title = props.title??'User List';
+  const emptyListMessage = props.emptyListMessage??'This list is empty.'
   return (
-    <Box sx={{bgcolor: bgColor, width: width, height: height}}>
-      <List sx={{width: '100%', height: '100%', bgcolor: bgColor}}>
-        {users?.map(user => <FriendListItem user={user} key={user.id} /> )}
-      </List>
+    <Box sx={{bgcolor: bgColor, height: height, p:2, m:2,display:'flex', flexDirection:'column'}}>
+      <Box>
+        <Typography variant='h4'>{title}</Typography>
+      </Box>
+      <Box sx={{overflowY:`auto`}}>
+        {users.length===0 && <Typography variant='body2'>{emptyListMessage}</Typography>}
+        <List sx={{width: '100%', maxHeight: '100%', bgcolor: bgColor}}>
+          {users?.map(user => <FriendListItem user={user} key={user.id} /> )}
+        </List>
+      </Box>
     </Box>
   )
 }

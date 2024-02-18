@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import App from './App'
-import { tokenStorageTitle } from './constants/constants'
+import { UNAUTHORIZED, tokenStorageTitle } from './constants/constants'
 import axios from 'axios'
 import { OPERATION_NAMES, callGraphqlServer } from './graphql/utils'
 import { LOGGED_IN_USER_QUERY } from './graphql/query/user'
@@ -53,10 +53,8 @@ export const loader = async () => {
   
     } catch (e) {
       console.error(e);
-      if(e.message==='Unauthorized'){
-        delete axios.defaults.headers.common["Authorization"];
-        return { loggedInUser: null };
-      }
+      if(e.message===UNAUTHORIZED) delete axios.defaults.headers.common["Authorization"];
+      return { loggedInUser: null };
     }
   }
 }

@@ -15,3 +15,9 @@ export const registrationSuccess = 'User registration successful.';
 export const registerationFailure = 'Registration failed.';
 export const loginSuccess = 'User login successful.';
 export const loginFailure = 'Login failed.';
+export const UNAUTHORIZED = 'Unauthorized';
+export const unAuthError = 'Session expired. Please refresh or login again.'
+
+//Friends Page
+export const friendsError = 'Error while fetching friends. Please refresh or try again later.'
+export const noFriendsDisplayText = 'You have 0 friends. Start by adding some friends.'

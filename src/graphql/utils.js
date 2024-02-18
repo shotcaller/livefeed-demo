@@ -1,5 +1,5 @@
 import axios from "axios";
-import { serverGraphqlUrl, tokenStorageTitle } from "../constants/constants";
+import { UNAUTHORIZED, serverGraphqlUrl, tokenStorageTitle } from "../constants/constants";
 
 export const OPERATION_NAMES = {
   login: "Login",
@@ -38,7 +38,7 @@ export const callGraphqlServer = async (operationName, query, variables=null) =>
   } catch (e) {
     //If token expired or not present or unauth req, logs out from Root
     if(e?.response?.status===401){
-      throw new Error('Unauthorized');
+      throw new Error(UNAUTHORIZED);
     }
     else
       throw new Error(e.data?.errors[0]?.message??"Some error occurred.");
