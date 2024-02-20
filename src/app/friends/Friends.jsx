@@ -1,24 +1,34 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { OPERATION_NAMES, callGraphqlServer } from '../../graphql/utils';
 import { LOGGED_IN_USER_FRIENDS_QUERY } from "../../graphql/query/user";
 import { useLoaderData } from "react-router-dom";
 import UserList from "../../components/UserList/UserList";
 import { useDispatch } from "react-redux";
 import { openAlert } from "../../slice/alertPopupSlice";
-import { UNAUTHORIZED, friendsError, noFriendsDisplayText, unAuthError } from "../../constants/constants";
+import { UNAUTHORIZED, friendsError, noFriendsDisplayText, noUsersDisplayText, unAuthError } from "../../constants/constants";
+import ListDialog from "../../components/Dialog/ListDialog";
 
 
 function Friends() {
   const dispatch = useDispatch();
   const { friends, error } = useLoaderData();
+  const [openAddFriendDialog, setOpenAddFriendDialog] = useState(false);
   if(friends===null && error) dispatch(openAlert({ message: error===UNAUTHORIZED?unAuthError:friendsError, type: 'error'}))
 
   const friendListProps = {
     users : friends,
     title : 'My Friends',
     height : 400,
-    emptyListMessage: noFriendsDisplayText
+    emptyListMessage: noFriendsDisplayText,
+    additionalActionHandler: () => setOpenAddFriendDialog(true)
+  }
+
+  const addFriendListProps = {
+    users : friends,
+    title : 'Add Friends',
+    height : 400,
+    emptyListMessage: noUsersDisplayText,
   }
   
   return (
@@ -30,6 +40,10 @@ function Friends() {
         </Grid>
         <Grid item xs={0} md={2} lg={3}></Grid>
       </Grid>
+
+      <ListDialog open={openAddFriendDialog} onClose={() => setOpenAddFriendDialog(false)} maxWidth={'sm'}>
+        <UserList {...addFriendListProps} />
+      </ListDialog>
     </>
   );
 }

@@ -1,9 +1,11 @@
 import { Call } from '@mui/icons-material';
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Avatar, Box, Button, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React from 'react'
 
 /** In props send a type property so can design a List Item based on that. For eg: User list type can be friends
  * so that in friend list can define particular list item.
+ * 
+ * If any additional task to be done, list heading has a button that can trigger a prop function additionalActionHandler
  */
 const UserList = (props) => {
   const users = props.users??[];
@@ -12,10 +14,19 @@ const UserList = (props) => {
   const listType = props.listType??'friendList';
   const title = props.title??'User List';
   const emptyListMessage = props.emptyListMessage??'This list is empty.'
+  const additionalActionHandler = props.additionalActionHandler??null;
+
+  const handleAdditionalAction = () => {
+    if(additionalActionHandler){
+      if(listType==='friendList') additionalActionHandler();
+    }
+  }
   return (
     <Box sx={{bgcolor: bgColor, height: height, p:2, m:2,display:'flex', flexDirection:'column'}}>
-      <Box>
+      <Box sx={{display:"flex"}}>
         <Typography variant='h4'>{title}</Typography>
+        {additionalActionHandler &&
+          <Button onClick={handleAdditionalAction} variant='outlined' sx={{ml:'auto', mb:'auto'}}>Add a friend</Button>}
       </Box>
       <Box sx={{overflowY:`auto`}}>
         {users.length===0 && <Typography variant='body2'>{emptyListMessage}</Typography>}

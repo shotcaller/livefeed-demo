@@ -21,3 +21,4 @@ export const unAuthError = 'Session expired. Please refresh or login again.'
 //Friends Page
 export const friendsError = 'Error while fetching friends. Please refresh or try again later.'
 export const noFriendsDisplayText = 'You have 0 friends. Start by adding some friends.'
+export const noUsersDisplayText = 'There are no users to show currently. '
