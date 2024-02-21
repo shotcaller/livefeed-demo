@@ -47,6 +47,17 @@ export const LOGGED_IN_USER_FRIENDS_QUERY = `
     }
   }
 `
+
+export const ALL_USERS_QUERY = `
+  query AllUsers {
+    users {
+      id,
+      name,
+      userid
+    }
+  }
+`
+
 export const ADD_FRIEND_QUERY = `
   mutation AddFriend ($friendUserId: String!) {
     addFriend (friendUserId: $friendUserId) {

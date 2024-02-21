@@ -1,11 +1,13 @@
 import axios from "axios";
 import { UNAUTHORIZED, serverGraphqlUrl, tokenStorageTitle } from "../constants/constants";
+import { ALL_USERS_QUERY } from "./query/user";
 
 export const OPERATION_NAMES = {
   login: "Login",
   register: "Register",
   loggedInUser: "LoggedInUser",
-  loggedInUserFriends: "LoggedInUserFriends"
+  loggedInUserFriends: "LoggedInUserFriends",
+  allUsers: "AllUsers"
 
 };
 
@@ -42,5 +44,20 @@ export const callGraphqlServer = async (operationName, query, variables=null) =>
     }
     else
       throw new Error(e.data?.errors[0]?.message??"Some error occurred.");
+  }
+}
+
+//** Function to get all Users */
+export const getAllUsers = async () =>{
+  try {
+      const response = await callGraphqlServer(
+        OPERATION_NAMES.allUsers,
+        ALL_USERS_QUERY
+      );
+      if (!response.users) throw new Error("Error while fetching users.");
+
+      return response.users;
+  } catch (e) {
+    console.error(e);
   }
 }
