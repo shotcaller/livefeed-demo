@@ -7,8 +7,8 @@ export const OPERATION_NAMES = {
   register: "Register",
   loggedInUser: "LoggedInUser",
   loggedInUserFriends: "LoggedInUserFriends",
-  allUsers: "AllUsers"
-
+  allUsers: "AllUsers",
+  addFriend: "AddFriend"
 };
 
 export const createDataPayload = (operationName, query, variables=null) => {

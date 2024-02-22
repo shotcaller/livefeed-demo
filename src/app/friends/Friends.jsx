@@ -1,34 +1,56 @@
 import { Grid } from "@mui/material";
-import React, { useState } from "react";
-import { OPERATION_NAMES, callGraphqlServer } from '../../graphql/utils';
+import React, { useEffect, useState } from "react";
+import { OPERATION_NAMES, callGraphqlServer, getAllUsers } from '../../graphql/utils';
 import { LOGGED_IN_USER_FRIENDS_QUERY } from "../../graphql/query/user";
 import { useLoaderData } from "react-router-dom";
 import UserList from "../../components/UserList/UserList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openAlert } from "../../slice/alertPopupSlice";
-import { UNAUTHORIZED, friendsError, noFriendsDisplayText, noUsersDisplayText, unAuthError } from "../../constants/constants";
+import { UNAUTHORIZED, addFriendList, friendList, friendsError, noFriendsDisplayText, noUsersDisplayText, unAuthError } from "../../constants/constants";
 import ListDialog from "../../components/Dialog/ListDialog";
 
 
 function Friends() {
+  const { userid } = useSelector(state => state.user);
   const dispatch = useDispatch();
   const { friends, error } = useLoaderData();
-  const [openAddFriendDialog, setOpenAddFriendDialog] = useState(false);
   if(friends===null && error) dispatch(openAlert({ message: error===UNAUTHORIZED?unAuthError:friendsError, type: 'error'}))
+  
+  const [openAddFriendDialog, setOpenAddFriendDialog] = useState(false);
+
+  const [nonFriends, setNonFriends] = useState([])
+  useEffect(() => {
+    const getNonFriends = async () => {
+      let users = await getAllUsers();
+      //Filter out users who are already friends
+      if(friends.length>0)
+        users = users.filter(user => !friends.some(friend => friend.id === user.id));
+      
+      //Remove logged in user lol
+      setNonFriends(users.filter(user => user.userid!==userid));
+    }
+    
+    if(openAddFriendDialog)
+      getNonFriends();
+    
+  },[openAddFriendDialog])
 
   const friendListProps = {
     users : friends,
     title : 'My Friends',
     height : 400,
     emptyListMessage: noFriendsDisplayText,
-    additionalActionHandler: () => setOpenAddFriendDialog(true)
+    additionalActionHandler: () => setOpenAddFriendDialog(true),
+    additionalActionTitle: 'Add more',
+    listType: friendList
   }
 
   const addFriendListProps = {
-    users : friends,
+    users : nonFriends,
     title : 'Add Friends',
     height : 400,
     emptyListMessage: noUsersDisplayText,
+    listType: addFriendList
   }
   
   return (
