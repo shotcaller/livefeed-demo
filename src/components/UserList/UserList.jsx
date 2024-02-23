@@ -1,5 +1,5 @@
 import { Call, CheckCircle, PersonAdd } from '@mui/icons-material';
-import { Avatar, Box, Button, CircularProgress, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Avatar, Box, CircularProgress, Fab, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { IDLE, LOADING, SUCCESS, addFriendErrorMsg, addFriendList, friendList } from '../../constants/constants';
 import { useDispatch } from 'react-redux';
@@ -31,7 +31,7 @@ const UserList = (props) => {
   const setStylePerListType = () => {
     switch(listType) {
       case friendList: 
-        return {bgcolor: bgColor, height: height, p:2, m:2,display:'flex', flexDirection:'column'};
+        return {bgcolor: bgColor, height: height, p:2, m:2,display:'flex', flexDirection:'column', borderRadius: 1}
       
       case addFriendList:
         return {bgcolor: bgColor, height: height, display:'flex', flexDirection:'column'}
@@ -42,7 +42,11 @@ const UserList = (props) => {
       <Box sx={{display:"flex"}}>
         <Typography variant='h4'>{title}</Typography>
         {additionalActionHandler &&
-          <Button onClick={handleAdditionalAction} size='small' variant='outlined' sx={{ml:'auto', mb:'auto'}}>{additionalActionTitle}</Button>}
+          // <Button onClick={handleAdditionalAction} size='small' variant='outlined' sx={{ml:'auto', mb:'auto'}}>{additionalActionTitle}</Button>}
+          <Fab onClick={handleAdditionalAction} variant='extended' color='primary' size='medium'  sx={{ml:'auto', mb:'auto'}}>
+            <AdditionalActionIcon listType={listType} sx={{mr:1}} />
+            {additionalActionTitle}
+            </Fab>}
       </Box>
       <Box sx={{overflowY:`auto`}}>
         {users.length===0 && <Typography variant='body2'>{emptyListMessage}</Typography>}
@@ -52,6 +56,15 @@ const UserList = (props) => {
       </Box>
     </Box>
   )
+}
+
+const AdditionalActionIcon = (props) => {
+  const { listType, sx } = props;
+
+  switch (listType) {
+    case friendList:
+      return <PersonAdd sx={sx} />
+  }
 }
 
 const CommonUserListItem = ({ listType, user }) => {

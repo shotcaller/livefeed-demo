@@ -41,7 +41,7 @@ function Friends() {
     height : 400,
     emptyListMessage: noFriendsDisplayText,
     additionalActionHandler: () => setOpenAddFriendDialog(true),
-    additionalActionTitle: 'Add more',
+    additionalActionTitle: 'Add',
     listType: friendList
   }
 
