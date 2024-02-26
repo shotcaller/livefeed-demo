@@ -1,20 +1,28 @@
-import { AppBar, Box, Button, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { AppName } from "../../constants/constants";
 import { Info } from "@mui/icons-material";
 import Masthead from "../Masthead/Masthead";
-import { useLogout } from "../../hooks/useLogout";
+import AccountMenu from "./AccountMenu";
+import { NameToAvatar } from "../UserList/UserList";
 
 function MyAppBar(props) {
-  const logout = useLogout();
   const { name, online } = useSelector((state) => state.user);
-  const { showLogout } = props;
   const [openMasthead, setOpenMasthead] = useState(false);
+  const [menuAnchor, setMenuAnchor] = useState(null);
+  const openMenu = Boolean(menuAnchor);
 
-  const logoutUser = () => {
-    logout();
-  };
+  const handleMyAccountClick = (e) => {
+    setMenuAnchor(e.currentTarget);
+  }
+
+  const accountMenuProps = {
+    anchorEl : menuAnchor,
+    open: openMenu,
+    handleClose: () => setMenuAnchor(null),
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -25,17 +33,24 @@ function MyAppBar(props) {
               your virtual hangout place
             </Typography>
           </Typography>
-          {online && (
+          {/* {online && (
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Welcome {name}!
             </Typography>
-          )}
-
-          {showLogout && (
-            <Button variant="contained" color="error" onClick={logoutUser}>
-              Logout
-            </Button>
-          )}
+          )} */}
+          
+          {online && 
+            <>
+            <Tooltip title="My Account">
+              <IconButton size="small" onClick={handleMyAccountClick}>
+                <Avatar sx={{ width:32, height: 32, borderColor:'white', borderStyle:'solid', borderWidth:'3px', bgcolor:'purple'}}>
+                  <NameToAvatar name={name} />
+                </Avatar>
+              </IconButton>
+            </Tooltip>
+            <AccountMenu {...accountMenuProps}/></>
+          }
+          
           <Tooltip title='About us'>
             <IconButton size="large" onClick={() => setOpenMasthead(true)}>
               <Info />

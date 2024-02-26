@@ -1,4 +1,4 @@
-import { Call, CheckCircle, PersonAdd } from '@mui/icons-material';
+import { Call, CheckCircle, Person, PersonAdd } from '@mui/icons-material';
 import { Avatar, Box, CircularProgress, Fab, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { IDLE, LOADING, SUCCESS, addFriendErrorMsg, addFriendList, friendList } from '../../constants/constants';
@@ -90,7 +90,7 @@ const FriendListItem = (props) => {
     }>
       <ListItemAvatar>
         <Avatar alt={name} sx={{bgcolor: stringToColor(name)}}>
-          {name.split(' ')[0][0]}{name.split(' ')[1]?name.split(' ')[1][0]:''}
+          <NameToAvatar name={name} />
         </Avatar>
       </ListItemAvatar>
       <ListItemText primary={`@${userid}`} secondary={name} />
@@ -138,7 +138,7 @@ const AddFriendListItem = (props) => {
     }>
       <ListItemAvatar>
         <Avatar alt={name} sx={{bgcolor: stringToColor(name)}}>
-          {name.split(' ')[0][0]}{name.split(' ')[1]?name.split(' ')[1][0]:''}
+          <NameToAvatar name={name} />
         </Avatar>
       </ListItemAvatar>
       <ListItemText primary={`@${userid}`} secondary={name} />
@@ -170,4 +170,11 @@ const stringToColor = (string) => {
   /* eslint-enable no-bitwise */
 
   return color;
+}
+
+/**Compoent to convert name into Avatar titles */
+export const NameToAvatar = ({name}) => {
+  if(name)
+    return (`${name.split(' ')[0][0]}${name.split(' ')[1]?name.split(' ')[1][0]:''}`);
+  else return <Person />;
 }
