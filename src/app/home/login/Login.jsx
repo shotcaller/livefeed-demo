@@ -71,7 +71,6 @@ const Login = () => {
               <CardContent>
                 <TextField
                   fullWidth
-                  type="password"
                   margin="normal"
                   error={errors.userid ? true : false}
                   variant="outlined"
@@ -82,6 +81,7 @@ const Login = () => {
                 />
                 <TextField
                   fullWidth
+                  type="password"
                   margin="normal"
                   error={errors.password ? true : false}
                   variant="outlined"
