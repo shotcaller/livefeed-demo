@@ -99,6 +99,7 @@ const Register = (props) => {
                   variant="outlined"
                   label="Password"
                   id="password"
+                  type="password"
                   {...register("password", { required: passwordErrorMsg })}
                   helperText={errors.password ? errors.password.message : ""}
                 />
